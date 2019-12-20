@@ -1,6 +1,6 @@
 // 프로젝트: 취미 커뮤니티 만들기.
 //
-// v02. 배열로 정리하기.
+// v02-1. 배열로 정리하기.
 
 package gyakusou.java.management;
 
@@ -13,28 +13,34 @@ public class App2 {
 
     //2. Raffle 게시판
     
+    class Raffle {
+      String brand;
+      int releaseMonth;
+      int price;
+    }
+    
     final int SIZE = 100;
-    
-    String[] brand = new String[SIZE];
-    int[] releaseMonth = new int[SIZE];
-    int[] price = new int[SIZE];
-    
+    Raffle[] raf = new Raffle[SIZE];
     int count = 0;
     
     for (int i = 0; i < SIZE; i++) {
       
       count++;
       
+      Raffle rafLow = new Raffle();
+      
       System.out.print("브랜드명? ");
-      brand[i] = keyboard.nextLine();
+      rafLow.brand = keyboard.nextLine();
       
       System.out.print("출시월? ");
-      releaseMonth[i] = keyboard.nextInt();
+      rafLow.releaseMonth = keyboard.nextInt();
       keyboard.nextLine();
       
       System.out.print("가격? ");
-      price[i] = keyboard.nextInt();
+      rafLow.price = keyboard.nextInt();
       keyboard.nextLine();
+      
+      raf[i] = rafLow;
       
       System.out.print("계속 입력하시겠습니까? (Y/n) ");
       String response = keyboard.nextLine();
@@ -49,7 +55,9 @@ public class App2 {
     
     for (int i = 0; i < count; i++) {
       
-      System.out.printf("%s, %d, %s", brand[i], releaseMonth[i], price[i]);
+      Raffle rafLow = raf[i];
+      
+      System.out.printf("%s, %d, %s\n", rafLow.brand, rafLow.releaseMonth, rafLow.price);
 
     }
   }
