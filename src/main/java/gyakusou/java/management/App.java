@@ -1,6 +1,6 @@
 // 프로젝트: 취미 커뮤니티 만들기.
 // 
-// v02-1. 배열로 정리하기.
+// v03
 
 package gyakusou.java.management;
 
