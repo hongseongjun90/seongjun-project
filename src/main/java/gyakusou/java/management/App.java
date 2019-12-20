@@ -1,6 +1,6 @@
 // 프로젝트: 취미 커뮤니티 만들기.
 // 
-// v01. 기본 데이터 만들기.
+// v02. 배열로 정리하기.
 
 package gyakusou.java.management;
 
@@ -12,34 +12,56 @@ public class App {
    
    // 1. 커뮤니티 게시판
    
-   System.out.print("아이디? ");
-   String id = keyboard.nextLine();
+   final int SIZE = 100;
    
-   System.out.print("닉네임? ");
-   String nickName = keyboard.nextLine();
+   String[] id = new String[SIZE];
+   String[] nickName = new String[SIZE];
+   String[] title = new String[SIZE];
+   String[] titleContents = new String[SIZE];
+   String[] contents = new String[SIZE];
+   String[] brandtag = new String[SIZE];
    
-   System.out.print("제목? ");
-   String title = keyboard.nextLine();
+   int count = 0;
    
-   System.out.print("제목+내용? ");
-   String titleContents = keyboard.nextLine();
-   
-   System.out.print("내용? ");
-   String contents = keyboard.nextLine();
-   
-   System.out.print("브랜드태그? ");
-   String brandtag = keyboard.nextLine();
-   
-   System.out.println();
-   
-   System.out.printf("아이디: %s\n", id);
-   System.out.printf("닉네임: %s\n", nickName);
-   System.out.printf("제목: %s\n", title);
-   System.out.printf("제목+내용: %s\n", titleContents);
-   System.out.printf("내용: %s\n", contents);
-   System.out.printf("브랜드태그: %s\n", brandtag);
+   for (int i = 0; i < SIZE; i++) {
+     
+     count++;
+     
+     System.out.print("아이디? ");
+     id[i] = keyboard.nextLine();
+     
+     System.out.print("닉네임? ");
+     nickName[i] = keyboard.nextLine();
+     
+     System.out.print("제목? ");
+     title[i] = keyboard.nextLine();
+     
+     System.out.print("제목+내용? ");
+     titleContents[i] = keyboard.nextLine();
+     
+     System.out.print("내용? ");
+     contents[i] = keyboard.nextLine();
+     
+     System.out.print("브랜드태그? ");
+     brandtag[i] = keyboard.nextLine();
+     
+     System.out.print("계속 입력하시겠습니까? (Y/n) ");
+     String response = keyboard.nextLine();
+     if (!response.equalsIgnoreCase("y"))
+       break;
+     
+     System.out.println();
+   }
    
    keyboard.close();
+   
+   
+   for (int i = 0; i < count; i++) {
+   
+   System.out.printf("%s, %s, %s, %s, %s, %s\n", 
+       id[i], nickName[i], title[i], titleContents[i], contents[i], brandtag[i]);
+   
+   }
   
  }
 }
