@@ -12,7 +12,7 @@ public class App3 {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in); 
 
-    // 3. 발매 정보 공지 게시판
+    // 3. 발매 정보 데이터 정보 입력
 
     class Raffle {  
       String brand;
@@ -57,7 +57,7 @@ public class App3 {
 
           raf[raffleCount++] = rafLow;
           System.out.println("저장하였습니다.");
-          
+
           break;
 
         case "/raffle/list":
@@ -77,7 +77,6 @@ public class App3 {
             System.out.println("실행할 수 없는 명령입니다.");
           }
       }
-      
     } 
 
 
