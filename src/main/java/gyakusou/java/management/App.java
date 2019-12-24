@@ -1,73 +1,57 @@
-// 프로젝트: 취미 커뮤니티 만들기.
-// 
-// v03
+// 프로젝트 : 취미 커뮤니티 만들기.
+//
+// v05
 
 package gyakusou.java.management;
 
 import java.util.Scanner;
+import gyakusou.java.management.handler.CommunityHandler;
+import gyakusou.java.management.handler.RaffleHandler;
 
 public class App {
+  static Scanner keyboard = new Scanner(System.in);
+
+  // 커뮤니티 게시판, 발매 및 응모 정보 게시판 통합
   public static void main(String[] args) {
-    Scanner keyboard = new Scanner(System.in);
+  
+    CommunityHandler.keyboard = keyboard;
+    RaffleHandler.keyboard = keyboard;
+  
+    String command;
 
-    // 1. 커뮤니티 게시판
+    do {System.out.print("\n명령> ");
+    command = keyboard.nextLine();
 
-    class Comunity {
-      String id;
-      String nickName;
-      String title;
-      String titleContents;
-      String contents;
-      String brandtag;
-    }
+    switch (command) {
 
-    final int SIZE = 100;
-    Comunity[] comu = new Comunity[SIZE];
-    int count = 0;
-
-    for (int i = 0; i < SIZE; i++) {
-      count++;
-
-      Comunity comuLow = new Comunity();
-
-      System.out.print("아이디? ");
-      comuLow.id = keyboard.nextLine();
-
-      System.out.print("닉네임? ");
-      comuLow.nickName = keyboard.nextLine();
-
-      System.out.print("제목? ");
-      comuLow.title = keyboard.nextLine();
-
-      System.out.print("제목+내용? ");
-      comuLow.titleContents = keyboard.nextLine();
-
-      System.out.print("내용? ");
-      comuLow.contents = keyboard.nextLine();
-
-      System.out.print("브랜드태그? ");
-      comuLow.brandtag = keyboard.nextLine();
-
-      comu[i] = comuLow;
-
-      System.out.print("계속 입력하시겠습니까? (Y/n) ");
-      String response = keyboard.nextLine();
-      if (!response.equalsIgnoreCase("y"))
+      case "/community/add":
+        CommunityHandler.addCommunity();
         break;
 
-      System.out.println();
+      case "/community/list":
+        CommunityHandler.listCommunity();
+        break;
+
+      case "/raffle/add":
+        RaffleHandler.addRaffle();
+        break;
+
+      case "/raffle/list":
+        RaffleHandler.listRaffle();
+        break;
+
+      default:
+        if(!command.equalsIgnoreCase("quit")) {
+          System.out.println("실행할 수 없는 명령 입니다.");
+        }
     }
+
+    } while (!command.equalsIgnoreCase("quit"));
+
+    System.out.println("안녕!");
 
     keyboard.close();
 
-
-    for (int i = 0; i < count; i++) {
-      Comunity comuLow = comu[i];
-
-      System.out.printf("%s, %s, %s, %s, %s, %s\n", 
-          comuLow.id, comuLow.nickName, comuLow.title , 
-          comuLow.titleContents, comuLow.contents, comuLow.brandtag);
-
-    }
   }
+
 }
