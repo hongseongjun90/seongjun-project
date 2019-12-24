@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v05
+// v06 App
 
 package gyakusou.java.management;
 
@@ -9,14 +9,19 @@ import gyakusou.java.management.handler.CommunityHandler;
 import gyakusou.java.management.handler.RaffleHandler;
 
 public class App {
+
   static Scanner keyboard = new Scanner(System.in);
 
-  // 커뮤니티 게시판, 발매 및 응모 정보 게시판 통합
   public static void main(String[] args) {
-  
+
     CommunityHandler.keyboard = keyboard;
     RaffleHandler.keyboard = keyboard;
-  
+
+    CommunityHandler communityHandler = new CommunityHandler();
+
+    RaffleHandler raffleHandler = new RaffleHandler();
+
+
     String command;
 
     do {System.out.print("\n명령> ");
@@ -25,20 +30,28 @@ public class App {
     switch (command) {
 
       case "/community/add":
-        CommunityHandler.addCommunity();
+        CommunityHandler.addCommunity(communityHandler);
         break;
 
       case "/community/list":
-        CommunityHandler.listCommunity();
+        CommunityHandler.listCommunity(communityHandler);
+        break;
+
+      case "/community/detail":
+        CommunityHandler.detailCommunity(communityHandler);
         break;
 
       case "/raffle/add":
-        RaffleHandler.addRaffle();
+        RaffleHandler.addRaffle(raffleHandler);
         break;
 
       case "/raffle/list":
-        RaffleHandler.listRaffle();
+        RaffleHandler.listRaffle(raffleHandler);
         break;
+
+      case "/raffle/detail":
+        RaffleHandler.detailRaffle(raffleHandler);
+        break; 
 
       default:
         if(!command.equalsIgnoreCase("quit")) {
