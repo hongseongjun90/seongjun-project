@@ -1,5 +1,10 @@
+// 프로젝트 : 취미 커뮤니티 만들기.
+//
+// v08-1 handler.RaffelList
+
 package gyakusou.java.management.handler;
 
+import java.util.Arrays;
 import gyakusou.java.management.domain.Raffle;
 
 public class RaffleList {
@@ -21,23 +26,28 @@ public class RaffleList {
   }
   
   public Raffle[] toArray() {
-   
+   /*
     Raffle[] arr = new Raffle[this.size];
     for (int i = 0; i < this.size; i++) {
       arr[i] = this.list[i];
     }
     return arr;
+    */
+    return Arrays.copyOf(this.list, this.size);
   }
 
   public void add(Raffle raffle) {
     if (this.size == this.list.length) {                         
       int oldCapacity = this.list.length;                         
       int newCapacity = oldCapacity + (oldCapacity >> 1);                    
+      /*
       Raffle[] arr = new Raffle[newCapacity];                     
       for (int i = 0; i < this.list.length; i++) {              
         arr[i] = this.list[i];                                  
       }                                                         
-      this.list = arr;                                          
+      this.list = arr;
+      */
+      this.list = Arrays.copyOf(this.list, newCapacity);
     }
     this.list[this.size++] = raffle;
   }

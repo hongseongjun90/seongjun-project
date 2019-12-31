@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v08 handler.RaffleHandler
+// v08-1 handler.RaffleHandler
 
 package gyakusou.java.management.handler;
 
