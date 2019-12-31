@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v06 domain.Community
+// v08 domain.Community
 
 package gyakusou.java.management.domain;
 

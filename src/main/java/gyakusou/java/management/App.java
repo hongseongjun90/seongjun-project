@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v06 App
+// v08 App
 
 package gyakusou.java.management;
 
@@ -14,43 +14,39 @@ public class App {
 
   public static void main(String[] args) {
 
-    CommunityHandler.keyboard = keyboard;
-    RaffleHandler.keyboard = keyboard;
-
-    CommunityHandler communityHandler = new CommunityHandler();
-
-    RaffleHandler raffleHandler = new RaffleHandler();
+    CommunityHandler communityHandler = new CommunityHandler(keyboard);
+    RaffleHandler raffleHandler = new RaffleHandler(keyboard);
 
     String command;
 
-
-    do {System.out.print("\n명령> ");
+    do {
+      System.out.print("\n명령> ");
     command = keyboard.nextLine();
 
     switch (command) {
 
       case "/community/add":
-        CommunityHandler.addCommunity(communityHandler);
+        communityHandler.addCommunity();
         break;
 
       case "/community/list":
-        CommunityHandler.listCommunity(communityHandler);
+        communityHandler.listCommunity();
         break;
 
       case "/community/detail":
-        CommunityHandler.detailCommunity(communityHandler);
+        communityHandler.detailCommunity();
         break;
 
       case "/raffle/add":
-        RaffleHandler.addRaffle(raffleHandler);
+        raffleHandler.addRaffle();
         break;
 
       case "/raffle/list":
-        RaffleHandler.listRaffle(raffleHandler);
+        raffleHandler.listRaffle();
         break;
 
       case "/raffle/detail":
-        RaffleHandler.detailRaffle(raffleHandler);
+        raffleHandler.detailRaffle();
         break; 
 
       default:

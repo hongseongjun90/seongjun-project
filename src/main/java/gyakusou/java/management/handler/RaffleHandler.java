@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v06 handler.RaffleHandler
+// v08 handler.RaffleHandler
 
 package gyakusou.java.management.handler;
 
@@ -10,70 +10,65 @@ import gyakusou.java.management.domain.Raffle;;
 
 public class RaffleHandler {
 
-  Raffle[] raffles = new Raffle[RAFFLE_SIZE];
-  int raffleCount = 0;
+  RaffleList raffleList;
+  Scanner input;
+  
+  public RaffleHandler(Scanner input) {
+    this.input = input;
+    raffleList = new RaffleList();
+  }
+  
+  public RaffleHandler(Scanner input, int capacity) {
+    this.input = input;
+    raffleList = new RaffleList(capacity);
+  }
 
-
-  static final int RAFFLE_SIZE = 100;
-  public static Scanner keyboard;
-
-
-  public static void addRaffle(RaffleHandler raffleHandler) {
+  public void addRaffle() {
 
     Raffle raffle = new Raffle();
 
     System.out.print("번호? ");
-    raffle.setNo(keyboard.nextInt());
+    raffle.setNo(input.nextInt());
 
-    keyboard.nextLine(); 
+    input.nextLine(); 
 
     System.out.print("브랜드명? ");
-    raffle.setBrand(keyboard.nextLine());
+    raffle.setBrand(input.nextLine());
 
     System.out.print("신발명? ");
-    raffle.setShoeName(keyboard.nextLine());
+    raffle.setShoeName(input.nextLine());
 
     System.out.print("출시일? ");
-    raffle.setReleaseDate(Date.valueOf(keyboard.next()));
-    keyboard.nextLine();
+    raffle.setReleaseDate(Date.valueOf(input.next()));
+    input.nextLine();
 
     System.out.print("가격? ");
-    raffle.setPrice(keyboard.nextInt());
-    keyboard.nextLine();
+    raffle.setPrice(input.nextInt());
+    input.nextLine();
 
     System.out.print("발매장소? ");
-    raffle.setPlaceSale(keyboard.nextLine());
+    raffle.setPlaceSale(input.nextLine());
 
-    raffleHandler.raffles[raffleHandler.raffleCount++] = raffle;
-
+    raffleList.add(raffle);
     System.out.println("저장하였습니다.");
   }
 
-  public static void listRaffle(RaffleHandler raffleHandler) {
-
-    for (int i = 0; i < raffleHandler.raffleCount; i++) {
-
-      Raffle R = raffleHandler.raffles[i];
-
+  public void listRaffle() {
+    Raffle[] raffles = raffleList.toArray();
+    for (Raffle r : raffles) {
       System.out.printf("%s, %s, %s, %s, %d, %s\n", 
-          R.getNo(), R.getBrand(), R.getShoeName(), 
-          R.getReleaseDate(), R.getPrice(), R.getPlaceSale());
+          r.getNo(), r.getBrand(), r.getShoeName(), 
+          r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
     }
 
   }
-  public static void detailRaffle(RaffleHandler raffleHandler) {
+  public void detailRaffle( ) {
     System.out.print("게시물 번호? ");
-    int no = keyboard.nextInt();
-    keyboard.nextLine(); // 숫자 뒤의 남은 공백 제거
+    int no = input.nextInt();
+    input.nextLine();
 
-    Raffle raffle = null;
-    for (int i = 0; i < raffleHandler.raffleCount; i++) {
-      if (raffleHandler.raffles[i].getNo() == no) {
-        raffle = raffleHandler.raffles[i];
-        break;
-      }
-    }
-
+    Raffle raffle = raffleList.get(no);
+    
     if (raffle == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
       return;

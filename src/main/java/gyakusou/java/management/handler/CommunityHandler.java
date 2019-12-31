@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v06 handler.CommunityHandler
+// v08 handler.CommunityHandler
 
 package gyakusou.java.management.handler;
 
@@ -9,70 +9,68 @@ import gyakusou.java.management.domain.Community;
 
 public class CommunityHandler {
 
-  Community[] community = new Community[COMMUNITY_SIZE];
-  int communityCount = 0;
+  CommunityList communityList;
+  Scanner input;
+  
+  public CommunityHandler(Scanner keyboard) {
+    this.input = keyboard;
+    communityList = new CommunityList();
+  }
+  
+  public CommunityHandler(Scanner keyboard, int capacity) {
+    this.input = keyboard;
+    communityList = new CommunityList(capacity);
+  }
 
 
-  static final int COMMUNITY_SIZE = 100;
-  public static Scanner keyboard;
+  public void addCommunity() {
 
-
-  public static void addCommunity(CommunityHandler communityHandler) {
-
-    Community communitys = new Community();
+    Community community = new Community();
 
     System.out.print("번호? ");
-    communitys.setNo(keyboard.nextInt());
-    keyboard.nextLine();
+    community.setNo(input.nextInt());
+    input.nextLine();
 
     System.out.print("아이디? ");
-    communitys.setId(keyboard.nextLine());
+    community.setId(input.nextLine());
 
     System.out.print("닉네임? ");
-    communitys.setNickName(keyboard.nextLine());
+    community.setNickName(input.nextLine());
 
     System.out.print("제목? ");
-    communitys.setTitle(keyboard.nextLine());
+    community.setTitle(input.nextLine());
 
     System.out.print("제목+내용? ");
-    communitys.setTitleContents(keyboard.nextLine());
+    community.setTitleContents(input.nextLine());
 
     System.out.print("내용? ");
-    communitys.setContents(keyboard.nextLine());
+    community.setContents(input.nextLine());
 
     System.out.print("브랜드태그? ");
-    communitys.setBrandtag(keyboard.nextLine());
+    community.setBrandtag(input.nextLine());
 
-    communityHandler.community[communityHandler.communityCount++] = communitys;
-
+    communityList.add(community);
     System.out.println("저장하였습니다.");
   }
 
-  public static void listCommunity(CommunityHandler communityHandler) {
-
-    for (int i = 0; i < communityHandler.communityCount; i++) {
-
-      Community C = communityHandler.community[i];
+  public void listCommunity() {
+    Community[] communitys = communityList.toArray();
+    
+    for (Community c : communitys) {
 
       System.out.printf("%d, %s, %s, %s, %s, %s, %s\n", 
-          C.getNo(), C.getId(), C.getNickName(), C.getTitle() , 
-          C.getTitleContents(), C.getContents(), C.getBrandtag());
+          c.getNo(), c.getId(), c.getNickName(), c.getTitle() , 
+          c.getTitleContents(), c.getContents(), c.getBrandtag());
 
     }
 
   }
-  public static void detailCommunity(CommunityHandler communityHandler) {
+  public void detailCommunity() {
     System.out.print("게시물 번호? ");
-    int no = keyboard.nextInt();
-    keyboard.nextLine(); // 숫자 뒤의 남은 공백 제거
-
-    Community community = null;
-    for (int i = 0; i < communityHandler.communityCount; i++) {
-      if (communityHandler.community[i].getNo() == no) {
-        community = communityHandler.community[i];
-        break;
-      }
-    }
+    int no = input.nextInt();
+    input.nextLine(); 
+    
+    Community community = communityList.get(no);
 
     if (community == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
