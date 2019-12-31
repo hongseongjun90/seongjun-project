@@ -21,8 +21,8 @@ public class App {
 
     RaffleHandler raffleHandler = new RaffleHandler();
 
-
     String command;
+
 
     do {System.out.print("\n명령> ");
     command = keyboard.nextLine();

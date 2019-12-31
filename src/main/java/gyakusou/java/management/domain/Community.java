@@ -5,13 +5,57 @@
 package gyakusou.java.management.domain;
 
 
-  public class Community {
-    public int no;
-    public String id;
-    public String nickName;
-    public String title;
-    public String titleContents;
-    public String contents;
-    public String brandtag;
+public class Community {
+  private int no;
+  private String id;
+  private String nickName;
+  private String title;
+  private String titleContents;
+  private String contents;
+  private String brandtag;
+  public int getNo() {
+    return no;
   }
+  public void setNo(int no) {
+    this.no = no;
+  }
+  public String getId() {
+    return id;
+  }
+  public void setId(String id) {
+    this.id = id;
+  }
+  public String getNickName() {
+    return nickName;
+  }
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
+  public String getTitle() {
+    return title;
+  }
+  public void setTitle(String title) {
+    this.title = title;
+  }
+  public String getTitleContents() {
+    return titleContents;
+  }
+  public void setTitleContents(String titleContents) {
+    this.titleContents = titleContents;
+  }
+  public String getContents() {
+    return contents;
+  }
+  public void setContents(String contents) {
+    this.contents = contents;
+  }
+  public String getBrandtag() {
+    return brandtag;
+  }
+  public void setBrandtag(String brandtag) {
+    this.brandtag = brandtag;
+  }
+  
+  
+}
 

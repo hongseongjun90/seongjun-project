@@ -23,26 +23,26 @@ public class RaffleHandler {
     Raffle raffle = new Raffle();
 
     System.out.print("번호? ");
-    raffle.no = keyboard.nextInt();
+    raffle.setNo(keyboard.nextInt());
 
     keyboard.nextLine(); 
 
     System.out.print("브랜드명? ");
-    raffle.brand = keyboard.nextLine();
+    raffle.setBrand(keyboard.nextLine());
 
     System.out.print("신발명? ");
-    raffle.shoeName = keyboard.nextLine();
+    raffle.setShoeName(keyboard.nextLine());
 
     System.out.print("출시일? ");
-    raffle.releaseDate = Date.valueOf(keyboard.next());
+    raffle.setReleaseDate(Date.valueOf(keyboard.next()));
     keyboard.nextLine();
 
     System.out.print("가격? ");
-    raffle.price = keyboard.nextInt();
+    raffle.setPrice(keyboard.nextInt());
     keyboard.nextLine();
 
     System.out.print("발매장소? ");
-    raffle.placeSale = keyboard.nextLine();
+    raffle.setPlaceSale(keyboard.nextLine());
 
     raffleHandler.raffles[raffleHandler.raffleCount++] = raffle;
 
@@ -56,7 +56,8 @@ public class RaffleHandler {
       Raffle R = raffleHandler.raffles[i];
 
       System.out.printf("%s, %s, %s, %s, %d, %s\n", 
-          R.no, R.brand, R.shoeName, R.releaseDate, R.price, R.placeSale);
+          R.getNo(), R.getBrand(), R.getShoeName(), 
+          R.getReleaseDate(), R.getPrice(), R.getPlaceSale());
     }
 
   }
@@ -67,7 +68,7 @@ public class RaffleHandler {
 
     Raffle raffle = null;
     for (int i = 0; i < raffleHandler.raffleCount; i++) {
-      if (raffleHandler.raffles[i].no == no) {
+      if (raffleHandler.raffles[i].getNo() == no) {
         raffle = raffleHandler.raffles[i];
         break;
       }
@@ -78,12 +79,12 @@ public class RaffleHandler {
       return;
     }
 
-    System.out.printf("번호: %d\n", raffle.no);
-    System.out.printf("브랜드명: %s\n", raffle.brand);
-    System.out.printf("신발명: %s\n", raffle.shoeName);
-    System.out.printf("출시일: %s\n", raffle.releaseDate);
-    System.out.printf("가격: %d\n", raffle.price);
-    System.out.printf("발매장소: %s\n", raffle.placeSale);
+    System.out.printf("번호: %d\n", raffle.getNo());
+    System.out.printf("브랜드명: %s\n", raffle.getBrand());
+    System.out.printf("신발명: %s\n", raffle.getShoeName());
+    System.out.printf("출시일: %s\n", raffle.getReleaseDate());
+    System.out.printf("가격: %d\n", raffle.getPrice());
+    System.out.printf("발매장소: %s\n", raffle.getPlaceSale());
   }
 
 }
