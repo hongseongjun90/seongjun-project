@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v08-1 domain.Community
+// v08-2 domain.Community
 
 package gyakusou.java.management.domain;
 
@@ -13,6 +13,7 @@ public class Community {
   private String titleContents;
   private String contents;
   private String brandtag;
+  
   public int getNo() {
     return no;
   }

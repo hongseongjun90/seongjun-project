@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v08-1 handler.RaffleHandler
+// v09 handler.RaffleHandler
 
 package gyakusou.java.management.handler;
 
@@ -10,19 +10,29 @@ import gyakusou.java.management.domain.Raffle;;
 
 public class RaffleHandler {
 
-  RaffleList raffleList;
+  ArrayList raffleList;
   Scanner input;
   
   public RaffleHandler(Scanner input) {
     this.input = input;
-    raffleList = new RaffleList();
+    raffleList = new ArrayList();
   }
   
   public RaffleHandler(Scanner input, int capacity) {
     this.input = input;
-    raffleList = new RaffleList(capacity);
+    raffleList = new ArrayList(capacity);
   }
-
+  
+  public void listRaffle() {
+    Object[] arr = this.raffleList.toArray();
+    for (Object obj : arr) {
+      Raffle r = (Raffle) obj;
+      System.out.printf("%s, %s, %s, %s, %d, %s\n", 
+          r.getNo(), r.getBrand(), r.getShoeName(), 
+          r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
+    }
+  }
+  
   public void addRaffle() {
 
     Raffle raffle = new Raffle();
@@ -53,21 +63,13 @@ public class RaffleHandler {
     System.out.println("저장하였습니다.");
   }
 
-  public void listRaffle() {
-    Raffle[] raffles = raffleList.toArray();
-    for (Raffle r : raffles) {
-      System.out.printf("%s, %s, %s, %s, %d, %s\n", 
-          r.getNo(), r.getBrand(), r.getShoeName(), 
-          r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
-    }
-
-  }
+  
   public void detailRaffle( ) {
     System.out.print("게시물 번호? ");
-    int no = input.nextInt();
+    int index = input.nextInt();
     input.nextLine();
 
-    Raffle raffle = raffleList.get(no);
+    Raffle raffle = (Raffle) this.raffleList.get(index);
     
     if (raffle == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
