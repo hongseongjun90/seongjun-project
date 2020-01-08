@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v09 Main
+// v10 Main
 
 package gyakusou.java.management;
 

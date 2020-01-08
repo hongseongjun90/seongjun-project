@@ -1,32 +1,35 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v09 handler.RaffleHandler
+// v10 handler.RaffleHandler
 
 package gyakusou.java.management.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
-import gyakusou.java.management.domain.Raffle;;
+import gyakusou.java.management.domain.Raffle;
+import gyakusou.java.management.util.ArrayList;;
 
 public class RaffleHandler {
 
-  ArrayList raffleList;
+  ArrayList<Raffle> raffleList;
   Scanner input;
   
   public RaffleHandler(Scanner input) {
     this.input = input;
-    raffleList = new ArrayList();
+    raffleList = new ArrayList<>();
   }
   
   public RaffleHandler(Scanner input, int capacity) {
     this.input = input;
-    raffleList = new ArrayList(capacity);
+    raffleList = new ArrayList<>(capacity);
   }
   
   public void listRaffle() {
-    Object[] arr = this.raffleList.toArray();
-    for (Object obj : arr) {
-      Raffle r = (Raffle) obj;
+    Raffle[] arr = new Raffle[this.raffleList.size()];
+    
+    this.raffleList.toArray(arr);
+    
+    for (Raffle r : arr) {
       System.out.printf("%s, %s, %s, %s, %d, %s\n", 
           r.getNo(), r.getBrand(), r.getShoeName(), 
           r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
@@ -69,7 +72,7 @@ public class RaffleHandler {
     int index = input.nextInt();
     input.nextLine();
 
-    Raffle raffle = (Raffle) this.raffleList.get(index);
+    Raffle raffle = this.raffleList.get(index);
     
     if (raffle == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
