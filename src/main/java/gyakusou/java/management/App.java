@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v10 Main
+// v11 Main
 
 package gyakusou.java.management;
 
@@ -21,39 +21,47 @@ public class App {
 
     do {
       System.out.print("\n명령> ");
-    command = keyboard.nextLine();
+      command = keyboard.nextLine();
 
-    switch (command) {
+      switch (command) {
 
-      case "/community/add":
-        communityHandler.addCommunity();
-        break;
+        case "/community/add":
+          communityHandler.addCommunity();
+          break;
+        case "/community/list":
+          communityHandler.listCommunity();
+          break;
+        case "/community/detail":
+          communityHandler.detailCommunity();
+          break;
+        case "/community/update":
+          communityHandler.updateCommunity();
+          break;
+        case "/community/delete":
+          communityHandler.deleteCommunity();
+          break;
 
-      case "/community/list":
-        communityHandler.listCommunity();
-        break;
+        case "/raffle/add":
+          raffleHandler.addRaffle();
+          break;
+        case "/raffle/list":
+          raffleHandler.listRaffle();
+          break;
+        case "/raffle/detail":
+          raffleHandler.detailRaffle();
+          break; 
+        case "/raffle/update":
+          raffleHandler.updateRaffle();
+          break;
+        case "/raffle/delete":
+          raffleHandler.deleteRaffle();
+          break; 
 
-      case "/community/detail":
-        communityHandler.detailCommunity();
-        break;
-
-      case "/raffle/add":
-        raffleHandler.addRaffle();
-        break;
-
-      case "/raffle/list":
-        raffleHandler.listRaffle();
-        break;
-
-      case "/raffle/detail":
-        raffleHandler.detailRaffle();
-        break; 
-
-      default:
-        if(!command.equalsIgnoreCase("quit")) {
-          System.out.println("실행할 수 없는 명령 입니다.");
-        }
-    }
+        default:
+          if(!command.equalsIgnoreCase("quit")) {
+            System.out.println("실행할 수 없는 명령 입니다.");
+          }
+      }
 
     } while (!command.equalsIgnoreCase("quit"));
 
