@@ -1,21 +1,24 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v11 Main
+// v12-1 Main
 
 package gyakusou.java.management;
 
 import java.util.Scanner;
 import gyakusou.java.management.handler.CommunityHandler;
 import gyakusou.java.management.handler.RaffleHandler;
+import gyakusou.java.management.util.Prompt;
 
 public class App {
 
   static Scanner keyboard = new Scanner(System.in);
 
   public static void main(String[] args) {
+    
+    Prompt prompt = new Prompt(keyboard);
 
-    CommunityHandler communityHandler = new CommunityHandler(keyboard);
-    RaffleHandler raffleHandler = new RaffleHandler(keyboard);
+    CommunityHandler communityHandler = new CommunityHandler(prompt);
+    RaffleHandler raffleHandler = new RaffleHandler(prompt);
 
     String command;
 

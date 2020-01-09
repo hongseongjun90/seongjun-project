@@ -1,6 +1,6 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v11 util.ArrayList
+// v12-1 util.ArrayList
 
 package gyakusou.java.management.util;
 
