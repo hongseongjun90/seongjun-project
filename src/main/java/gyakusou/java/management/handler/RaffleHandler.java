@@ -2,7 +2,6 @@
 //
 // v12-1 handler.RaffleHandler
 
-// * 주석처리한 곳 줄바뀜 현상 해결해야 함.
 
 package gyakusou.java.management.handler;
 
@@ -93,15 +92,15 @@ public class RaffleHandler {
     newRaffle.setShoeName(prompt.inputString(
         String.format("신발명(%s)? ", oldRaffle.getShoeName()), 
         oldRaffle.getShoeName()));
-/*
-    newRaffle.setReleaseDate(prompt.inputDate(
+
+   newRaffle.setReleaseDate(prompt.inputDate(
         String.format("출시일(%s)? ", oldRaffle.getReleaseDate()), 
         oldRaffle.getReleaseDate()));
 
-    newRaffle.setPrice(prompt.inputInt(
+   newRaffle.setPrice(prompt.inputInt(
         String.format("가격(%s)? ", oldRaffle.getPrice()), 
         oldRaffle.getPrice()));
-*/
+
     newRaffle.setPlaceSale(prompt.inputString(
         String.format("발매장소(%s)? ", oldRaffle.getPlaceSale()), 
         oldRaffle.getPlaceSale()));

@@ -1,6 +1,7 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-1 util.Prompt
+// v12-2 util.Prompt
+// 줄 바뀜 수정.
 
 package gyakusou.java.management.util;
 
@@ -35,7 +36,7 @@ public class Prompt {
   }
   
   public int inputInt(String label, int defaultValue) {
-    System.out.println(label);
+    System.out.print(label);
     String value = input.nextLine();
     if (value.length() == 0) {
       return defaultValue;
@@ -45,11 +46,11 @@ public class Prompt {
   
   public Date inputDate(String label) {
     System.out.print(label);
-    return Date.valueOf(input.nextLine());
+    return Date.valueOf(input.nextLine()); 
   }
   
   public Date inputDate(String label, Date defaultValue) {
-    System.out.println(label);
+    System.out.print(label);
     String value = input.nextLine();
     if (value.length() == 0) {
       return defaultValue;
