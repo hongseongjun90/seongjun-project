@@ -1,7 +1,7 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-2 util.Prompt
-// 줄 바뀜 수정.
+// v13 util.Prompt
+
 
 package gyakusou.java.management.util;
 

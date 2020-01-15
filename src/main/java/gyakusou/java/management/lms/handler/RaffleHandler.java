@@ -3,10 +3,10 @@
 // v12-1 handler.RaffleHandler
 
 
-package gyakusou.java.management.handler;
+package gyakusou.java.management.lms.handler;
 
 import java.sql.Date;
-import gyakusou.java.management.domain.Raffle;
+import gyakusou.java.management.lms.domain.Raffle;
 import gyakusou.java.management.util.LinkedList;
 import gyakusou.java.management.util.Prompt;;
 

@@ -2,9 +2,9 @@
 //
 // v12-1 handler.CommunityHandler
 
-package gyakusou.java.management.handler;
+package gyakusou.java.management.lms.handler;
 
-import gyakusou.java.management.domain.Community;
+import gyakusou.java.management.lms.domain.Community;
 import gyakusou.java.management.util.LinkedList;
 import gyakusou.java.management.util.Prompt;
 

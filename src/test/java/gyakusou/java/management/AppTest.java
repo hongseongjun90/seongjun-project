@@ -4,6 +4,7 @@
 package gyakusou.java.management;
 
 import org.junit.Test;
+import gyakusou.java.management.lms.App;
 import static org.junit.Assert.*;
 
 public class AppTest {

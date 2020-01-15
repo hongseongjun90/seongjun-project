@@ -1,20 +1,23 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-1 Main
+// v13 Main
 
-package gyakusou.java.management;
+package gyakusou.java.management.lms;
 
 import java.util.Scanner;
-import gyakusou.java.management.handler.CommunityHandler;
-import gyakusou.java.management.handler.RaffleHandler;
+import gyakusou.java.management.lms.handler.CommunityHandler;
+import gyakusou.java.management.lms.handler.RaffleHandler;
 import gyakusou.java.management.util.Prompt;
+import gyakusou.java.management.util.Stack;
 
 public class App {
 
   static Scanner keyboard = new Scanner(System.in);
 
+  static Stack<String> commandStack = new Stack<>();
+
   public static void main(String[] args) {
-    
+
     Prompt prompt = new Prompt(keyboard);
 
     CommunityHandler communityHandler = new CommunityHandler(prompt);
@@ -25,6 +28,11 @@ public class App {
     do {
       System.out.print("\n명령> ");
       command = keyboard.nextLine();
+      
+      if (command.length() == 0)
+        continue;
+      
+      commandStack.push(command);
 
       switch (command) {
 
@@ -59,6 +67,10 @@ public class App {
         case "/raffle/delete":
           raffleHandler.deleteRaffle();
           break; 
+          
+        case "history":
+          printCommandHistory();
+          break; 
 
         default:
           if(!command.equalsIgnoreCase("quit")) {
@@ -74,4 +86,28 @@ public class App {
 
   }
 
+
+  private static void printCommandHistory() {
+    Stack<String> historyStack = (Stack<String>) commandStack.clone();
+    int count = 0;
+    while (!historyStack.empty()) {
+      System.out.println(historyStack.pop());
+      count++;
+      
+      if ((count % 5) == 0) {
+        System.out.print(":");
+        String str = keyboard.nextLine();
+        if (str.equalsIgnoreCase("q")) {
+          break;
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+

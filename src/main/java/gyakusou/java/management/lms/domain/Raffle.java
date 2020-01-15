@@ -2,7 +2,7 @@
 //
 // v12-1 domain.Raffle
 
-package gyakusou.java.management.domain;
+package gyakusou.java.management.lms.domain;
 
 import java.sql.Date;
 

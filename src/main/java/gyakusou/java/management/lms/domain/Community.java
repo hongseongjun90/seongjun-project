@@ -2,7 +2,7 @@
 //
 // v12-1 domain.Community
 
-package gyakusou.java.management.domain;
+package gyakusou.java.management.lms.domain;
 
 
 public class Community {
