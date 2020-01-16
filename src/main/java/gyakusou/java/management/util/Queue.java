@@ -1,3 +1,7 @@
+// 프로젝트 : 취미 커뮤니티 만들기.
+//
+// v14 util.Queue
+
 package gyakusou.java.management.util;
 
 public class Queue<E> extends LinkedList<E> implements Cloneable {
