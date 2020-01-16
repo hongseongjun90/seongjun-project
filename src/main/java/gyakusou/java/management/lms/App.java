@@ -1,13 +1,15 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v13 Main
+// v14 Main
 
 package gyakusou.java.management.lms;
+
 
 import java.util.Scanner;
 import gyakusou.java.management.lms.handler.CommunityHandler;
 import gyakusou.java.management.lms.handler.RaffleHandler;
 import gyakusou.java.management.util.Prompt;
+import gyakusou.java.management.util.Queue;
 import gyakusou.java.management.util.Stack;
 
 public class App {
@@ -15,6 +17,7 @@ public class App {
   static Scanner keyboard = new Scanner(System.in);
 
   static Stack<String> commandStack = new Stack<>();
+  static Queue<String> commandQueue = new Queue<>();
 
   public static void main(String[] args) {
 
@@ -33,6 +36,8 @@ public class App {
         continue;
       
       commandStack.push(command);
+      
+      commandQueue.offer(command);
 
       switch (command) {
 
@@ -71,6 +76,9 @@ public class App {
         case "history":
           printCommandHistory();
           break; 
+        case "history2":
+          printCommandHistory2();
+          break; 
 
         default:
           if(!command.equalsIgnoreCase("quit")) {
@@ -86,6 +94,23 @@ public class App {
 
   }
 
+  private static void printCommandHistory2() {
+    Queue<String> historyQueue = commandQueue.clone();
+    int count = 0;
+    
+    while (historyQueue.size() > 0) {
+      System.out.println(historyQueue.poll());
+      
+      if ((++count % 5) == 0) {
+        System.out.print(":");
+        String str = keyboard.nextLine();
+        if (str.equalsIgnoreCase("q")) {
+          break;
+        }
+      }
+    }
+    
+  }
 
   private static void printCommandHistory() {
     Stack<String> historyStack = (Stack<String>) commandStack.clone();
