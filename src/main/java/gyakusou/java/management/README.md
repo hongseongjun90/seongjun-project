@@ -5,8 +5,8 @@ Queue 자료구조를 구현해보고 원리의 이해와 활용
 
 ## 변경 소스
 
-- src/main/java/com/eomcs/util/Queue.java 추가
-- src/main/java/com/eomcs/lms/App.java 변경
+- src/main/java/gyakusou/java/mangement/util/Queue.java 추가
+- src/main/java/gyakusou/java/mangement/lms/App.java 변경
 
 ## 실습
 
