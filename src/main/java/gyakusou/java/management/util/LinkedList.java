@@ -1,17 +1,17 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-1 util.LinkedList
+// v15-1 util.LinkedList
 
 package gyakusou.java.management.util;
 
 import java.lang.reflect.Array;
 
-public class LinkedList<E> {
+public class LinkedList<E> extends List<E> {
 
-  Node first;
-  Node last;
-  int size;
-
+  Node<E> first;
+  Node<E> last;
+  
+  @Override
   public void add(E value) {
     Node<E> newNode = new Node<>();
     newNode.value = value;
@@ -24,7 +24,8 @@ public class LinkedList<E> {
     }
     this.size++;
   }
-
+  
+  @Override
   public E get(int index) {
     if (index < 0 || index >= size)
       return null;
@@ -36,6 +37,7 @@ public class LinkedList<E> {
     return cursor.value;
   }
 
+  @Override
   public void add(int index, E value) {
     if (index < 0 || index >= size)
       return;
@@ -58,7 +60,8 @@ public class LinkedList<E> {
     this.size++;
 
   }
-
+  
+  @Override
   public E remove(int index) {
     if (index < 0 || index >= size)
       return null;
@@ -83,6 +86,7 @@ public class LinkedList<E> {
     return deletedNode.value;
   }
 
+ 
   public E set(int index, E value) {
     if (index < 0 || index >= size)
       return null;
@@ -91,12 +95,14 @@ public class LinkedList<E> {
     for (int i = 0; i < index; i ++) {
       cursor = cursor.next;
     }
+    
     E oldValue = cursor.value;
     cursor.value = value;
 
     return oldValue;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] arr = new Object[size];
 
@@ -109,6 +115,8 @@ public class LinkedList<E> {
     
   }
   
+  @Override
+  @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
     if (arr.length < size) {
       arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), size);
@@ -121,10 +129,6 @@ public class LinkedList<E> {
     }
     
     return arr;
-  }
-  
-  public int size() {
-    return this.size;
   }
 
   static class Node<T> {

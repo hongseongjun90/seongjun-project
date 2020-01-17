@@ -1,32 +1,30 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-1 handler.CommunityHandler
+// v15-1 handler.CommunityHandler
 
 package gyakusou.java.management.lms.handler;
 
+import java.util.List;
 import gyakusou.java.management.lms.domain.Community;
-import gyakusou.java.management.util.LinkedList;
 import gyakusou.java.management.util.Prompt;
 
 public class CommunityHandler {
 
-  LinkedList<Community> communityList;
+  List<Community> communityList;
+  
   Prompt prompt;
 
-  public CommunityHandler(Prompt prompt) {
+  public CommunityHandler(Prompt prompt, List<Community> list) {
     this.prompt = prompt;
-    communityList = new LinkedList<>();
-  }
-
-  public CommunityHandler(Prompt prompt, int capacity) {
-    this.prompt = prompt;
-    communityList = new LinkedList<>();
+    this.communityList = list;
   }
 
   public void listCommunity() {
 
-    Community[] arr = this.communityList.toArray(new Community[this.communityList.size()]); 
-
+    Community[] arr = new Community[this.communityList.size()]; 
+    
+    this.communityList.toArray(arr);
+    
     for (Community c : arr) {
       System.out.printf("%d, %s, %s, %s, %s, %s\n", 
           c.getNo(), c.getId(), c.getNickName(), c.getTitle() , 
@@ -45,7 +43,7 @@ public class CommunityHandler {
     community.setContents(prompt.inputString("내용? "));
     community.setBrandtag(prompt.inputString("브랜드태그? "));
 
-    communityList.add(community);
+    this.communityList.add(community);
 
     System.out.println("저장하였습니다.");
   }

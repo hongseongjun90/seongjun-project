@@ -1,46 +1,29 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v12-1 handler.RaffleHandler
+// v15-1 handler.RaffleHandler
 
 
 package gyakusou.java.management.lms.handler;
 
 import java.sql.Date;
+import java.util.List;
 import gyakusou.java.management.lms.domain.Raffle;
-import gyakusou.java.management.util.LinkedList;
 import gyakusou.java.management.util.Prompt;;
 
 public class RaffleHandler {
 
-  LinkedList<Raffle> raffleList;
+  List<Raffle> raffleList;
 
   public Prompt prompt;
 
-  public RaffleHandler(Prompt prompt) {
+  public RaffleHandler(final Prompt prompt, final List<Raffle> list) {
     this.prompt = prompt;
-    this.raffleList = new LinkedList<>();
-  }
-
-  public RaffleHandler(Prompt prompt, int capacity) {
-    this.prompt = prompt;
-    raffleList = new LinkedList<>();//
-  }
-
-  public void listRaffle() {
-    Raffle[] arr = new Raffle[this.raffleList.size()];
-
-    this.raffleList.toArray(arr);
-
-    for (Raffle r : arr) {
-      System.out.printf("%s, %s, %s, %s, %d, %s\n", 
-          r.getNo(), r.getBrand(), r.getShoeName(), 
-          r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
-    }
+    raffleList = list;
   }
 
   public void addRaffle() {
 
-    Raffle raffle = new Raffle();
+    final Raffle raffle = new Raffle();
 
     raffle.setNo(prompt.inputInt("번호? "));
     raffle.setBrand(prompt.inputString("브랜드명? "));
@@ -49,20 +32,35 @@ public class RaffleHandler {
     raffle.setPrice(prompt.inputInt("가격? "));
     raffle.setPlaceSale(prompt.inputString("발매장소? "));
 
-    this.raffleList.add(raffle);
+    raffleList.add(raffle);
 
     System.out.println("저장하였습니다.");
   }
 
+
+  public void deleteRaffle() {
+    final int index = indexOfRaffle(prompt.inputInt("번호? "));
+
+    if (index == -1) {
+      System.out.println("게시물이 유효하지 않습니다.");
+      return;
+    }
+
+    raffleList.remove(index);
+
+    System.out.println("게시글을 삭제했습니다.");
+  }
+
+
   public void detailRaffle() {
-    int index = indexOfRaffle(prompt.inputInt("번호? "));
+    final int index = indexOfRaffle(prompt.inputInt("번호? "));
 
     if (index == -1) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
       return;
     }
 
-    Raffle raffle = this.raffleList.get(index);
+    final Raffle raffle = raffleList.get(index);
 
     System.out.printf("번호: %d\n", raffle.getNo());
     System.out.printf("브랜드명: %s\n", raffle.getBrand());
@@ -70,6 +68,28 @@ public class RaffleHandler {
     System.out.printf("출시일: %s\n", raffle.getReleaseDate());
     System.out.printf("가격: %s\n", raffle.getPrice());
     System.out.printf("발매장소: %s\n", raffle.getPlaceSale());
+  }
+
+
+
+  private int indexOfRaffle(final int no) {
+    for (int i = 0; i < raffleList.size(); i++) {
+      if (raffleList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public void listRaffle() {
+    final Raffle[] arr = new Raffle[raffleList.size()];
+
+    raffleList.toArray(arr);
+
+    for (final Raffle r : arr) {
+      System.out.printf("%s, %s, %s, %s, %d, %s\n", r.getNo(), r.getBrand(), r.getShoeName(),
+          r.getReleaseDate(), r.getPrice(), r.getPlaceSale());
+    }
   }
 
   public void updateRaffle() {
@@ -111,29 +131,6 @@ public class RaffleHandler {
     } 
     this.raffleList.set(index, newRaffle);
     System.out.println(" 변경 하였습니다.");
-  }
-
-
-  public void deleteRaffle() {
-    int index = indexOfRaffle(prompt.inputInt("번호? "));
-
-    if (index == -1) {
-      System.out.println("게시물이 유효하지 않습니다.");
-      return;
-    }
-
-    this.raffleList.remove(index);
-
-    System.out.println("게시글을 삭제했습니다.");
-  }
-
-  private int indexOfRaffle(int no) {
-    for (int i = 0; i < this.raffleList.size(); i++) {
-      if (this.raffleList.get(i).getNo() == no) {
-        return i;
-      }
-    }
-    return -1;
   }
 
 }

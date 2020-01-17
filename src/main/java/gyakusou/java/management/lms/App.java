@@ -1,11 +1,15 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
 //
-// v14 Main
+// v15-1 Main
 
 package gyakusou.java.management.lms;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
+import gyakusou.java.management.lms.domain.Community;
+import gyakusou.java.management.lms.domain.Raffle;
 import gyakusou.java.management.lms.handler.CommunityHandler;
 import gyakusou.java.management.lms.handler.RaffleHandler;
 import gyakusou.java.management.util.Prompt;
@@ -23,9 +27,12 @@ public class App {
 
     Prompt prompt = new Prompt(keyboard);
 
-    CommunityHandler communityHandler = new CommunityHandler(prompt);
-    RaffleHandler raffleHandler = new RaffleHandler(prompt);
+    LinkedList<Community> communityList = new LinkedList<>();
+    CommunityHandler communityHandler = new CommunityHandler(prompt, communityList);
 
+    ArrayList<Raffle> raffleList = new ArrayList<>();
+    RaffleHandler raffleHandler = new RaffleHandler(prompt, raffleList);
+    
     String command;
 
     do {
