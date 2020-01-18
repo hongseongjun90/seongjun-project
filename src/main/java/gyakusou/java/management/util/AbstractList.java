@@ -1,5 +1,5 @@
 // 프로젝트 : 취미 커뮤니티 만들기.
-//
+// test
 // v15-2 util.AbstractList 
 
 package gyakusou.java.management.util;
