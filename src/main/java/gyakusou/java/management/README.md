@@ -1,5 +1,5 @@
 # v15-2
-
+ 
 ##
 일반화(generalization)를 통해 추출한 수퍼 클래스를 추상 클래스로 정의하기
 
@@ -10,7 +10,7 @@
   
 ## 실습
 
-o 데이터 목록을 다루는 ArrayList와 LinkedList의 공통점을 찾아 별도의 클래스로 분리하기  
+o List.java에 추상 클래스와 추상 메서드 문법을 적용하기. 
 
 - AbstractList.java
   - List 클래스의 이름을 AbstractList로 변경한다.
