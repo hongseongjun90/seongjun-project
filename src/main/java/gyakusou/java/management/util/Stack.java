@@ -4,70 +4,89 @@ import java.util.Arrays;
 
 public class Stack<E> implements Cloneable {
 
-	private static final int DEFAULT_CAPACITY = 10;
+  private static final int DEFAULT_CAPACITY = 10;
 
-	Object[] elementData;
-	int size;
+  Object[] elementData;
+  int size;
 
-	public Stack() {
-		this.elementData = new Object[DEFAULT_CAPACITY];
-		this.size = 0;
-	}
+  public Stack() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+    this.size = 0;
+  }
 
-	public void push(E value) {
-		if (this.size == elementData.length) {
-			grow();
-		}
-		this.elementData[size++] = value;
-	}
+  public void push(E value) {
+    if (this.size == elementData.length) {
+      grow();
+    }
+    this.elementData[size++] = value;
+  }
 
-	private void grow() {
-		this.elementData = Arrays.copyOf(elementData, newCapacity());
-	}
+  private void grow() {
+    this.elementData = Arrays.copyOf(elementData, newCapacity());
+  }
 
-	private int newCapacity() {
-		int oldCapacity = elementData.length;
-		return oldCapacity + (oldCapacity >> 1);
-	}
+  private int newCapacity() {
+    int oldCapacity = elementData.length;
+    return oldCapacity + (oldCapacity >> 1);
+  }
 
-	@SuppressWarnings("unchecked")
-	public E pop() {
-		if (this.empty())
-			return null;
-		E value = (E) this.elementData[--this.size];
-		this.elementData[this.size] = null;
-		return value;
-	}
+  @SuppressWarnings("unchecked")
+  public E pop() {
+    if (this.empty())
+      return null;
+    E value = (E) this.elementData[--this.size];
+    this.elementData[this.size] = null;
+    return value;
+  }
 
-	public boolean empty() {
-		return this.size == 0;
-	}
+  public boolean empty() {
+    return this.size == 0;
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Stack<E> clone() {
-		try {
-			Stack<E> temp = (Stack<E>) super.clone();
+  @SuppressWarnings("unchecked")
+  @Override
+  public Stack<E> clone() {
+    try {
+      Stack<E> temp = (Stack<E>) super.clone();
 
-			Object[] arr = new Object[this.size];
-			for (int i = 0; i < this.size; i++) {
-				arr[i] = this.elementData[i];
-			}
+      Object[] arr = new Object[this.size];
+      for (int i = 0; i < this.size; i++) {
+        arr[i] = this.elementData[i];
+      }
 
-			temp.elementData = arr;
+      temp.elementData = arr;
 
-			return temp;
+      return temp;
 
-		} catch (CloneNotSupportedException ex) {
-			System.out.println(ex);
-			return null;
-		}
-	}
+    } catch (CloneNotSupportedException ex) {
+      System.out.println(ex);
+      return null;
+    }
+  }
 
-	public Iterator<E> iterator() {
-		return new StackIterator<E>(this);
+  public Iterator<E> iterator() {
+    return new StackIterator<E>(this);
 
-	}
+  }
+
+  static class StackIterator<E> implements Iterator<E> {
+
+    Stack<E> stack;
+
+    public StackIterator(Stack<E> stack) {
+      this.stack = stack;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return !stack.empty();
+    }
+
+    @Override
+    public E next() {
+      return stack.pop();
+    }
+  }
 }
 
 
