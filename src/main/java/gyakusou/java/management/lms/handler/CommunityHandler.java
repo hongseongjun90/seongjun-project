@@ -1,8 +1,8 @@
 package gyakusou.java.management.lms.handler;
 
+import java.util.Iterator;
+import java.util.List;
 import gyakusou.java.management.lms.domain.Community;
-import gyakusou.java.management.util.Iterator;
-import gyakusou.java.management.util.List;
 import gyakusou.java.management.util.Prompt;
 
 public class CommunityHandler {
