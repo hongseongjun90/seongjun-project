@@ -4,6 +4,7 @@ package gyakusou.java.management.lms;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -33,85 +34,54 @@ public class App {
   public static void main(String[] args) {
 
     Prompt prompt = new Prompt(keyboard);
+    HashMap<String, Command> commandMap = new HashMap<>();
 
     LinkedList<Community> communityList = new LinkedList<>();
-    Command communityAddCommand = new CommunityAddCommand(prompt, communityList);
-    Command communityListCommand = new CommunityListCommand(communityList);
-    Command communityDetailCommand = new CommunityDetailCommand(prompt, communityList);
-    Command communityUpdateCommand = new CommunityUpdateCommand(prompt, communityList);
-    Command communityDeleteCommand = new CommunityDeleteCommand(prompt, communityList);
+    commandMap.put("/community/add", new CommunityAddCommand(prompt, communityList));
+    commandMap.put("/community/list", new CommunityListCommand(communityList));
+    commandMap.put("/community/detail", new CommunityDetailCommand(prompt, communityList));
+    commandMap.put("/community/update", new CommunityUpdateCommand(prompt, communityList));
+    commandMap.put("/community/delete", new CommunityDeleteCommand(prompt, communityList));
 
     ArrayList<Raffle> raffleList = new ArrayList<>();
-    Command raffleAddCommand = new RaffleAddCommand(prompt, raffleList);
-    Command raffleListCommand = new RaffleListCommand(raffleList);
-    Command raffleDetailCommand = new RaffleDetailCommand(prompt, raffleList);
-    Command raffleUpdateCommand = new RaffleUpdateCommand(prompt, raffleList);
-    Command raffleDeleteCommand = new RaffleDeleteCommand(prompt, raffleList);
-    
+    commandMap.put("/raffle/add", new RaffleAddCommand(prompt, raffleList));
+    commandMap.put("/raffle/list", new RaffleListCommand(raffleList));
+    commandMap.put("/raffle/detail", new RaffleDetailCommand(prompt, raffleList));
+    commandMap.put("/raffle/update", new RaffleUpdateCommand(prompt, raffleList));
+    commandMap.put("/raffle/delete", new RaffleDeleteCommand(prompt, raffleList));
 
     String command;
 
-    do {
+    while (true) {
       System.out.print("\n명령> ");
       command = keyboard.nextLine();
 
       if (command.length() == 0)
         continue;
 
+      if(!command.equals("quit")) {
+        System.out.println("안녕!");
+        break;
+      } else if (command.equals("history")) {
+        printCommandHistory(commandStack.iterator());
+        break; 
+      } else if (command.equals("history2")) {
+        printCommandHistory(commandQueue.iterator());
+        break; 
+      }
+
       commandStack.push(command);
 
       commandQueue.offer(command);
 
-      switch (command) {
+      Command commandHandler = commandMap.get(command);
 
-        case "/community/add":
-          communityAddCommand.execute();
-          break;
-        case "/community/list":
-          communityListCommand.execute();
-          break;
-        case "/community/detail":
-          communityDetailCommand.execute();
-          break;
-        case "/community/update":
-          communityUpdateCommand.execute();
-          break;
-        case "/community/delete":
-          communityDeleteCommand.execute();
-          break;
-
-        case "/raffle/add":
-          raffleAddCommand.execute();
-          break;
-        case "/raffle/list":
-          raffleListCommand.execute();
-          break;
-        case "/raffle/detail":
-          raffleDetailCommand.execute();
-          break; 
-        case "/raffle/update":
-          raffleUpdateCommand.execute();
-          break;
-        case "/raffle/delete":
-          raffleDeleteCommand.execute();
-          break; 
-
-        case "history":
-          printCommandHistory(commandStack.iterator());
-          break; 
-        case "history2":
-          printCommandHistory(commandQueue.iterator());
-          break; 
-
-        default:
-          if(!command.equalsIgnoreCase("quit")) {
-            System.out.println("실행할 수 없는 명령 입니다.");
-          }
+      if (commandHandler != null) {
+        commandHandler.execute();
+      } else {
+        System.out.println("안녕!");
       }
-
-    } while (!command.equalsIgnoreCase("quit"));
-
-    System.out.println("안녕!");
+    }
 
     keyboard.close();
 
