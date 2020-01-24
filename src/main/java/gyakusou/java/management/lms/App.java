@@ -10,8 +10,17 @@ import java.util.Queue;
 import java.util.Scanner;
 import gyakusou.java.management.lms.domain.Community;
 import gyakusou.java.management.lms.domain.Raffle;
-import gyakusou.java.management.lms.handler.CommunityHandler;
-import gyakusou.java.management.lms.handler.RaffleHandler;
+import gyakusou.java.management.lms.handler.Command;
+import gyakusou.java.management.lms.handler.CommunityAddCommand;
+import gyakusou.java.management.lms.handler.CommunityDeleteCommand;
+import gyakusou.java.management.lms.handler.CommunityDetailCommand;
+import gyakusou.java.management.lms.handler.CommunityListCommand;
+import gyakusou.java.management.lms.handler.CommunityUpdateCommand;
+import gyakusou.java.management.lms.handler.RaffleAddCommand;
+import gyakusou.java.management.lms.handler.RaffleDeleteCommand;
+import gyakusou.java.management.lms.handler.RaffleDetailCommand;
+import gyakusou.java.management.lms.handler.RaffleListCommand;
+import gyakusou.java.management.lms.handler.RaffleUpdateCommand;
 import gyakusou.java.management.util.Prompt;
 
 public class App {
@@ -26,10 +35,19 @@ public class App {
     Prompt prompt = new Prompt(keyboard);
 
     LinkedList<Community> communityList = new LinkedList<>();
-    CommunityHandler communityHandler = new CommunityHandler(prompt, communityList);
+    Command communityAddCommand = new CommunityAddCommand(prompt, communityList);
+    Command communityListCommand = new CommunityListCommand(communityList);
+    Command communityDetailCommand = new CommunityDetailCommand(prompt, communityList);
+    Command communityUpdateCommand = new CommunityUpdateCommand(prompt, communityList);
+    Command communityDeleteCommand = new CommunityDeleteCommand(prompt, communityList);
 
     ArrayList<Raffle> raffleList = new ArrayList<>();
-    RaffleHandler raffleHandler = new RaffleHandler(prompt, raffleList);
+    Command raffleAddCommand = new RaffleAddCommand(prompt, raffleList);
+    Command raffleListCommand = new RaffleListCommand(raffleList);
+    Command raffleDetailCommand = new RaffleDetailCommand(prompt, raffleList);
+    Command raffleUpdateCommand = new RaffleUpdateCommand(prompt, raffleList);
+    Command raffleDeleteCommand = new RaffleDeleteCommand(prompt, raffleList);
+    
 
     String command;
 
@@ -47,35 +65,35 @@ public class App {
       switch (command) {
 
         case "/community/add":
-          communityHandler.addCommunity();
+          communityAddCommand.execute();
           break;
         case "/community/list":
-          communityHandler.listCommunity();
+          communityListCommand.execute();
           break;
         case "/community/detail":
-          communityHandler.detailCommunity();
+          communityDetailCommand.execute();
           break;
         case "/community/update":
-          communityHandler.updateCommunity();
+          communityUpdateCommand.execute();
           break;
         case "/community/delete":
-          communityHandler.deleteCommunity();
+          communityDeleteCommand.execute();
           break;
 
         case "/raffle/add":
-          raffleHandler.addRaffle();
+          raffleAddCommand.execute();
           break;
         case "/raffle/list":
-          raffleHandler.listRaffle();
+          raffleListCommand.execute();
           break;
         case "/raffle/detail":
-          raffleHandler.detailRaffle();
+          raffleDetailCommand.execute();
           break; 
         case "/raffle/update":
-          raffleHandler.updateRaffle();
+          raffleUpdateCommand.execute();
           break;
         case "/raffle/delete":
-          raffleHandler.deleteRaffle();
+          raffleDeleteCommand.execute();
           break; 
 
         case "history":
