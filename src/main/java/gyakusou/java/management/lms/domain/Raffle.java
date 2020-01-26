@@ -9,6 +9,25 @@ public class Raffle {
   private Date releaseDate; 
   private int price;
   private String placeSale;
+  
+  public static Raffle valueOf(String csv) {
+    String[] data = csv.split(",");
+
+    Raffle raffle = new Raffle();
+    raffle.setNo(Integer.parseInt(data[0]));
+    raffle.setBrand(data[1]);
+    raffle.setShoeName(data[2]);
+    raffle.setReleaseDate(Date.valueOf(data[3]));
+    raffle.setPrice(Integer.parseInt(data[4]));
+    raffle.setPlaceSale(data[5]);
+    return raffle;
+  }
+  
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%s\n", this.getNo(), this.getBrand(),
+        this.getShoeName(), this.getReleaseDate(), this.getPrice(), 
+        this.getPlaceSale());
+  }
 
   @Override
   public int hashCode() {

@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -132,18 +131,7 @@ public class App {
 
       while (true) {
         try {
-          String line = dataScan.nextLine();
-          String[] data = line.split(",");
-
-          Community community = new Community();
-          community.setNo(Integer.parseInt(data[0]));
-          community.setId(data[1]);
-          community.setNickName(data[2]);
-          community.setTitle(data[3]);
-          community.setContents(data[4]);
-          community.setBrandtag(data[5]);
-
-          communityList.add(community);
+          communityList.add(Community.valueOf(dataScan.nextLine()));
           count++;
 
         } catch (Exception e) {
@@ -179,11 +167,8 @@ public class App {
       int count = 0;
 
       for (Community community : communityList) {
-        String line = String.format("%d,%s,%s,%s,%s,%s\n", community.getNo(), community.getId(),
-            community.getNickName(), community.getTitle(), community.getContents(), 
-            community.getBrandtag());
 
-        out.write(line);
+        out.write(community.toCsvString() + "\n");
         count++;
       }
       System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", count);
@@ -212,18 +197,8 @@ public class App {
 
       while (true) {
         try {
-          String line = dataScan.nextLine();
-          String[] data = line.split(",");
-
-          Raffle raffle = new Raffle();
-          raffle.setNo(Integer.parseInt(data[0]));
-          raffle.setBrand(data[1]);
-          raffle.setShoeName(data[2]);
-          raffle.setReleaseDate(Date.valueOf(data[3]));
-          raffle.setPrice(Integer.parseInt(data[4]));
-          raffle.setPlaceSale(data[5]);
-
-          raffleList.add(raffle);
+          
+          raffleList.add(Raffle.valueOf(dataScan.nextLine()));
           count++;
 
         } catch (Exception e) {
@@ -259,11 +234,7 @@ public class App {
       int count = 0;
 
       for (Raffle raffle : raffleList) {
-        String line = String.format("%d,%s,%s,%s,%s,%s\n", raffle.getNo(), raffle.getBrand(),
-            raffle.getShoeName(), raffle.getReleaseDate(), raffle.getPrice(), 
-            raffle.getPlaceSale());
-
-        out.write(line);
+        out.write(raffle.toCsvString() + "\n");
         count++;
       }
       System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", count);

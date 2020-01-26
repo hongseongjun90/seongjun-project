@@ -8,6 +8,25 @@ public class Community {
   private String title;
   private String contents;
   private String brandtag;
+  
+  public static Community valueOf(String csv) {
+    String[] data = csv.split(",");
+
+    Community community = new Community();
+    community.setNo(Integer.parseInt(data[0]));
+    community.setId(data[1]);
+    community.setNickName(data[2]);
+    community.setTitle(data[3]);
+    community.setContents(data[4]);
+    community.setBrandtag(data[5]);
+    return community;
+  }
+  
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%s\n", this.getNo(), this.getId(),
+        this.getNickName(), this.getTitle(), this.getContents(), 
+        this.getBrandtag());
+  }
 
   @Override
   public int hashCode() {
