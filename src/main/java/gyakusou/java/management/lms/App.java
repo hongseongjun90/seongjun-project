@@ -11,8 +11,10 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import com.google.gson.Gson;
 import gyakusou.java.management.lms.domain.Community;
 import gyakusou.java.management.lms.domain.Raffle;
 import gyakusou.java.management.lms.handler.Command;
@@ -35,8 +37,8 @@ public class App {
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
   
-  static LinkedList<Community> communityList = new LinkedList<>();
-  static ArrayList<Raffle> raffleList = new ArrayList<>();
+  static List<Community> communityList = new LinkedList<>();
+  static List<Raffle> raffleList = new ArrayList<>();
 
   public static void main(String[] args) {
     
@@ -119,59 +121,37 @@ public class App {
   }
 
   private static void loadCommunityData() {
-    File file = new File("./community.csv");
+    File file = new File("./community.json");
 
     FileReader in = null;
-    Scanner dataScan = null;
 
     try {
       in = new FileReader(file);
-      dataScan = new Scanner(in);
-      int count = 0;
-
-      while (true) {
-        try {
-          communityList.add(Community.valueOf(dataScan.nextLine()));
-          count++;
-
-        } catch (Exception e) {
-          break;
-        }
+      Community[] communitys = new Gson().fromJson(in, Community[].class);
+      for (Community community : communitys) {
+        communityList.add(community);
       }
-      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", count);
+      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", communityList.size());
 
     } catch (FileNotFoundException e) {
-      System.out.println("파일 읽기 중 오류 발생! -" + e.getMessage());
-
+      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
     } finally {
-      try {
-        dataScan.close();
-      } catch (Exception e) {
-
-      }
       try {
         in.close();
       } catch (Exception e) {
-
       }
     }
   }
 
   private static void saveCommunityData() {
-    File file = new File("./community.csv");
+    File file = new File("./community.json");
 
     FileWriter out = null;
 
     try {
       out = new FileWriter(file);
-      int count = 0;
-
-      for (Community community : communityList) {
-
-        out.write(community.toCsvString() + "\n");
-        count++;
-      }
-      System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", count);
+      out.write(new Gson().toJson(communityList));
+      System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", communityList.size());
 
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
@@ -185,59 +165,37 @@ public class App {
   }
   
   private static void loadRaffleData() {
-    File file = new File("./raffle.csv");
+    File file = new File("./raffle.json");
 
     FileReader in = null;
-    Scanner dataScan = null;
 
     try {
       in = new FileReader(file);
-      dataScan = new Scanner(in);
-      int count = 0;
-
-      while (true) {
-        try {
-          
-          raffleList.add(Raffle.valueOf(dataScan.nextLine()));
-          count++;
-
-        } catch (Exception e) {
-          break;
-        }
+      Raffle[] raffles = new Gson().fromJson(in, Raffle[].class);
+      for (Raffle raffle : raffles) {
+        raffleList.add(raffle);
       }
-      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", count);
+      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", raffleList.size());
 
     } catch (FileNotFoundException e) {
-      System.out.println("파일 읽기 중 오류 발생! -" + e.getMessage());
-
+      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
     } finally {
-      try {
-        dataScan.close();
-      } catch (Exception e) {
-
-      }
       try {
         in.close();
       } catch (Exception e) {
-
       }
     }
   }
   
   private static void saveRaffleData() {
-    File file = new File("./raffle.csv");
+    File file = new File("./raffle.json");
 
     FileWriter out = null;
 
     try {
       out = new FileWriter(file);
-      int count = 0;
-
-      for (Raffle raffle : raffleList) {
-        out.write(raffle.toCsvString() + "\n");
-        count++;
-      }
-      System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", count);
+      out.write(new Gson().toJson(raffleList));
+      System.out.printf("총 %d 개의 응모 데이터를 저장했습니다.\n", raffleList.size());
 
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
