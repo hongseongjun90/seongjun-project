@@ -122,18 +122,14 @@ public class App {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void loadCommunityData() {
-    File file = new File("./community.ser");
+    File file = new File("./community.ser2");
 
-    try (ObjectInputStream in = new ObjectInputStream(
-        new BufferedInputStream(new FileInputStream(file)))) {
-      
-      int size = in.readInt();
-      
-      for (int i = 0; i < size; i++) {
+    try (ObjectInputStream in = 
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
         
-        communityList.add((Community) in.readObject());
-      }
+        communityList = (List<Community>) in.readObject();
 
       System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", communityList.size());
 
@@ -143,18 +139,13 @@ public class App {
   }
 
   private static void saveCommunityData() {
-    File file = new File("./community.ser");
+    File file = new File("./community.ser2");
 
-    try (ObjectOutputStream out = new ObjectOutputStream(
-        new BufferedOutputStream(new FileOutputStream(file)))) {
+    try (ObjectOutputStream out = 
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
       
-      out.writeInt(communityList.size());
+      out.writeObject(communityList);
       
-      for (Community community : communityList) {
-        
-        out.writeObject(community);
-      }
-
       System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", communityList.size());
 
     } catch (IOException e) {
@@ -162,18 +153,16 @@ public class App {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void loadRaffleData() {
-    File file = new File("./raffle.ser");
+    File file = new File("./raffle.ser2");
 
 
-    try (ObjectInputStream in = new ObjectInputStream(
-        new BufferedInputStream(new FileInputStream(file)))) {
+    try (ObjectInputStream in = 
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
       
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
         
-        raffleList.add((Raffle) in.readObject());
-      }
+        raffleList = (List<Raffle>) in.readObject();
       
       System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", raffleList.size());
 
@@ -184,17 +173,12 @@ public class App {
   }
 
   private static void saveRaffleData() {
-    File file = new File("./raffle.ser");
+    File file = new File("./raffle.ser2");
 
-    try (ObjectOutputStream out = new ObjectOutputStream(
-        new BufferedOutputStream(new FileOutputStream(file)))) {
+    try (ObjectOutputStream out = 
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
       
-      out.writeInt(raffleList.size());
-      
-      for (Raffle raffle : raffleList) {
-
-        out.writeObject(raffle);
-      }
+      out.writeObject(raffleList);
       
       System.out.printf("총 %d 개의 응모 데이터를 저장했습니다.\n", raffleList.size());
 
