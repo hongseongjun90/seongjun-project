@@ -12,11 +12,14 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
+import gyakusou.java.management.lms.context.ApplicationContextListener;
 import gyakusou.java.management.lms.domain.Community;
 import gyakusou.java.management.lms.domain.Raffle;
 import gyakusou.java.management.lms.handler.Command;
@@ -34,15 +37,39 @@ import gyakusou.java.management.util.Prompt;
 
 public class App {
 
-  static Scanner keyboard = new Scanner(System.in);
+  Scanner keyboard = new Scanner(System.in);
 
-  static Deque<String> commandStack = new ArrayDeque<>();
-  static Queue<String> commandQueue = new LinkedList<>();
+  Deque<String> commandStack = new ArrayDeque<>();
+  Queue<String> commandQueue = new LinkedList<>();
 
-  static List<Community> communityList = new ArrayList<>();
-  static List<Raffle> raffleList = new ArrayList<>();
+  List<Community> communityList = new ArrayList<>();
+  List<Raffle> raffleList = new ArrayList<>();
+  
+  Set<ApplicationContextListener> listeners = new HashSet<>();
+  
+  public void addApplicationcontextListener(ApplicationContextListener listener) {
+    listeners.add(listener);
+  }
 
-  public static void main(String[] args) {
+  public void removeaddApplicationcontextListener(ApplicationContextListener listener) {
+    listeners.remove(listener);
+  }
+
+  private void notifyApplicationInitialized() {
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextInitatliazed();
+    }
+  }
+
+  private void notifyApplicationDestroyed() {
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextDestroyed();
+    }
+  }
+
+  public void service() {
+    
+    notifyApplicationInitialized();
 
     loadCommunityData();
     loadRaffleData();
@@ -103,10 +130,12 @@ public class App {
 
     saveCommunityData();
     saveRaffleData();
+    
+    notifyApplicationDestroyed();
 
   }
 
-  private static void printCommandHistory(Iterator<String> iterator) {
+  private void printCommandHistory(Iterator<String> iterator) {
     int count = 0;
     while (iterator.hasNext()) {
       System.out.println(iterator.next());
@@ -123,7 +152,7 @@ public class App {
   }
 
   @SuppressWarnings("unchecked")
-  private static void loadCommunityData() {
+  private void loadCommunityData() {
     File file = new File("./community.ser2");
 
     try (ObjectInputStream in = 
@@ -138,7 +167,7 @@ public class App {
     }
   }
 
-  private static void saveCommunityData() {
+  private void saveCommunityData() {
     File file = new File("./community.ser2");
 
     try (ObjectOutputStream out = 
@@ -154,7 +183,7 @@ public class App {
   }
 
   @SuppressWarnings("unchecked")
-  private static void loadRaffleData() {
+  private void loadRaffleData() {
     File file = new File("./raffle.ser2");
 
 
@@ -172,7 +201,7 @@ public class App {
     }
   }
 
-  private static void saveRaffleData() {
+  private void saveRaffleData() {
     File file = new File("./raffle.ser2");
 
     try (ObjectOutputStream out = 
@@ -185,6 +214,11 @@ public class App {
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
     }
+  }
+  
+  public static void main(String[] args) {
+    App app = new App();
+    app.service();
   }
 }
 
