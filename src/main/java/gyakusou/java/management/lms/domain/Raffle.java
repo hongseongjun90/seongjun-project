@@ -1,8 +1,12 @@
 package gyakusou.java.management.lms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Raffle {  
+public class Raffle implements Serializable {
+  
+  private static final long serialVersionUID = 20200202L;
+  
   private int no;
   private String brand;
   private String shoeName; 

@@ -1,7 +1,11 @@
 package gyakusou.java.management.lms.domain;
 
+import java.io.Serializable;
 
-public class Community {
+public class Community implements Serializable {
+  
+  private static final long serialVersionUID = 20200202L;
+  
   private int no;
   private String id;
   private String nickName;

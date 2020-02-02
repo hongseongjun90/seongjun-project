@@ -2,13 +2,12 @@ package gyakusou.java.management.lms;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -124,50 +123,36 @@ public class App {
   }
 
   private static void loadCommunityData() {
-    File file = new File("./community.data");
+    File file = new File("./community.ser");
 
-    try (DataInputStream in = new DataInputStream(
+    try (ObjectInputStream in = new ObjectInputStream(
         new BufferedInputStream(new FileInputStream(file)))) {
       
       int size = in.readInt();
       
       for (int i = 0; i < size; i++) {
-
-        Community community = new Community();
-      
-        community.setNo(in.readInt());
-        community.setId(in.readUTF());
-        community.setNickName(in.readUTF());
-        community.setTitle(in.readUTF());
-        community.setContents(in.readUTF());
-        community.setBrandtag(in.readUTF());
         
-        communityList.add(community);
+        communityList.add((Community) in.readObject());
       }
 
       System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", communityList.size());
 
-    } catch (IOException e) {
+    } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
     }
   }
 
   private static void saveCommunityData() {
-    File file = new File("./community.data");
+    File file = new File("./community.ser");
 
-    try (DataOutputStream out = new DataOutputStream(
+    try (ObjectOutputStream out = new ObjectOutputStream(
         new BufferedOutputStream(new FileOutputStream(file)))) {
       
       out.writeInt(communityList.size());
       
       for (Community community : communityList) {
-
-        out.writeInt(community.getNo());
-        out.writeUTF(community.getId());
-        out.writeUTF(community.getNickName());
-        out.writeUTF(community.getTitle());
-        out.writeUTF(community.getContents());
-        out.writeUTF(community.getBrandtag());
+        
+        out.writeObject(community);
       }
 
       System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", communityList.size());
@@ -178,49 +163,37 @@ public class App {
   }
 
   private static void loadRaffleData() {
-    File file = new File("./raffle.data");
+    File file = new File("./raffle.ser");
 
 
-    try (DataInputStream in = new DataInputStream(
+    try (ObjectInputStream in = new ObjectInputStream(
         new BufferedInputStream(new FileInputStream(file)))) {
       
       int size = in.readInt();
       for (int i = 0; i < size; i++) {
         
-        Raffle raffle = new Raffle();
-        raffle.setNo(in.readInt());
-        raffle.setBrand(in.readUTF());
-        raffle.setShoeName(in.readUTF());
-        raffle.setReleaseDate(Date.valueOf(in.readUTF()));
-        raffle.setPrice(Integer.parseInt(in.readUTF()));
-        raffle.setPlaceSale(in.readUTF());
-
-        raffleList.add(raffle);
+        raffleList.add((Raffle) in.readObject());
       }
       
       System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", raffleList.size());
 
 
-    } catch (IOException e) {
+    } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
     }
   }
 
   private static void saveRaffleData() {
-    File file = new File("./raffle.data");
+    File file = new File("./raffle.ser");
 
-    try (DataOutputStream out = new DataOutputStream(
+    try (ObjectOutputStream out = new ObjectOutputStream(
         new BufferedOutputStream(new FileOutputStream(file)))) {
       
       out.writeInt(raffleList.size());
       
       for (Raffle raffle : raffleList) {
-        out.writeInt(raffle.getNo());
-        out.writeUTF(raffle.getBrand());
-        out.writeUTF(raffle.getShoeName());
-        out.writeUTF(raffle.getReleaseDate().toString());
-        out.writeInt(raffle.getPrice());
-        out.writeUTF(raffle.getPlaceSale());
+
+        out.writeObject(raffle);
       }
       
       System.out.printf("총 %d 개의 응모 데이터를 저장했습니다.\n", raffleList.size());
