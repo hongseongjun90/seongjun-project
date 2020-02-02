@@ -1,14 +1,16 @@
 package gyakusou.java.management.lms;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
-import com.google.gson.Gson;
 import gyakusou.java.management.lms.domain.Community;
 import gyakusou.java.management.lms.domain.Raffle;
 import gyakusou.java.management.lms.handler.Command;
@@ -38,12 +39,12 @@ public class App {
 
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
-  
-  static List<Community> communityList = new LinkedList<>();
+
+  static List<Community> communityList = new ArrayList<>();
   static List<Raffle> raffleList = new ArrayList<>();
 
   public static void main(String[] args) {
-    
+
     loadCommunityData();
     loadRaffleData();
 
@@ -100,7 +101,7 @@ public class App {
     }
 
     keyboard.close();
-    
+
     saveCommunityData();
     saveRaffleData();
 
@@ -123,10 +124,27 @@ public class App {
   }
 
   private static void loadCommunityData() {
-    File file = new File("./community.json");
+    File file = new File("./community.data");
 
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-      communityList.addAll(Arrays.asList(new Gson().fromJson(in, Community[].class)));
+    try (DataInputStream in = new DataInputStream(
+        new BufferedInputStream(new FileInputStream(file)))) {
+      
+      int size = in.readInt();
+      
+      for (int i = 0; i < size; i++) {
+
+        Community community = new Community();
+      
+        community.setNo(in.readInt());
+        community.setId(in.readUTF());
+        community.setNickName(in.readUTF());
+        community.setTitle(in.readUTF());
+        community.setContents(in.readUTF());
+        community.setBrandtag(in.readUTF());
+        
+        communityList.add(community);
+      }
+
       System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", communityList.size());
 
     } catch (IOException e) {
@@ -135,38 +153,78 @@ public class App {
   }
 
   private static void saveCommunityData() {
-    File file = new File("./community.json");
+    File file = new File("./community.data");
 
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-        out.write(new Gson().toJson(communityList));
-        System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", communityList.size());
-        
+    try (DataOutputStream out = new DataOutputStream(
+        new BufferedOutputStream(new FileOutputStream(file)))) {
+      
+      out.writeInt(communityList.size());
+      
+      for (Community community : communityList) {
+
+        out.writeInt(community.getNo());
+        out.writeUTF(community.getId());
+        out.writeUTF(community.getNickName());
+        out.writeUTF(community.getTitle());
+        out.writeUTF(community.getContents());
+        out.writeUTF(community.getBrandtag());
+      }
+
+      System.out.printf("총 %d 개의 커뮤니티 데이터를 저장했습니다.\n", communityList.size());
+
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
     }
   }
-  
+
   private static void loadRaffleData() {
-    File file = new File("./raffle.json");
+    File file = new File("./raffle.data");
 
 
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-      raffleList.addAll(Arrays.asList(new Gson().fromJson(in, Raffle[].class)));
-      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", raffleList.size());
+    try (DataInputStream in = new DataInputStream(
+        new BufferedInputStream(new FileInputStream(file)))) {
       
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        
+        Raffle raffle = new Raffle();
+        raffle.setNo(in.readInt());
+        raffle.setBrand(in.readUTF());
+        raffle.setShoeName(in.readUTF());
+        raffle.setReleaseDate(Date.valueOf(in.readUTF()));
+        raffle.setPrice(Integer.parseInt(in.readUTF()));
+        raffle.setPlaceSale(in.readUTF());
+
+        raffleList.add(raffle);
+      }
+      
+      System.out.printf("총 %d 개의 커뮤니티 데이터를 로딩했습니다.\n", raffleList.size());
+
 
     } catch (IOException e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
     }
   }
-  
-  private static void saveRaffleData() {
-    File file = new File("./raffle.json");
 
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-      out.write(new Gson().toJson(raffleList));
-      System.out.printf("총 %d 개의 응모 데이터를 저장했습니다.\n", raffleList.size());
+  private static void saveRaffleData() {
+    File file = new File("./raffle.data");
+
+    try (DataOutputStream out = new DataOutputStream(
+        new BufferedOutputStream(new FileOutputStream(file)))) {
       
+      out.writeInt(raffleList.size());
+      
+      for (Raffle raffle : raffleList) {
+        out.writeInt(raffle.getNo());
+        out.writeUTF(raffle.getBrand());
+        out.writeUTF(raffle.getShoeName());
+        out.writeUTF(raffle.getReleaseDate().toString());
+        out.writeInt(raffle.getPrice());
+        out.writeUTF(raffle.getPlaceSale());
+      }
+      
+      System.out.printf("총 %d 개의 응모 데이터를 저장했습니다.\n", raffleList.size());
+
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
     }
