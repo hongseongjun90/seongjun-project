@@ -35,16 +35,16 @@ public class App {
   Queue<String> commandQueue = new LinkedList<>();
 
   Set<ApplicationContextListener> listeners = new HashSet<>();
-  
+
   Map<String, Object> context = new HashMap<>();
-  
-  public void addApplicationcontextListener(ApplicationContextListener listener) {
+
+  public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
   }
 
-  public void removeaddApplicationcontextListener(ApplicationContextListener listener) {
+  public void removeApplicationcontextListener(ApplicationContextListener listener) {
     listeners.remove(listener);
-  }
+  } // 변경 rmoveAddApplicationcontextListener -> removeApplicationcontextListener
 
   private void notifyApplicationInitialized() {
     for (ApplicationContextListener listener : listeners) {
@@ -60,12 +60,12 @@ public class App {
 
   @SuppressWarnings("unchecked")
   public void service() {
-    
+
     notifyApplicationInitialized();
-    
+
     List<Community> communityList = (List<Community>) context.get("communityList");
     List<Raffle> raffleList = (List<Raffle>) context.get("raffleList");
-    
+
     Prompt prompt = new Prompt(keyboard);
     HashMap<String, Command> commandMap = new HashMap<>();
 
@@ -90,15 +90,15 @@ public class App {
       if (command.length() == 0)
         continue;
 
-      if(command.equals("quit")) {
+      if (command.equals("quit")) {
         System.out.println("안녕!");
         break;
       } else if (command.equals("history")) {
         printCommandHistory(commandStack.iterator());
-        break; 
+        break;
       } else if (command.equals("history2")) {
         printCommandHistory(commandQueue.iterator());
-        break; 
+        break;
       }
 
       commandStack.push(command);
@@ -142,34 +142,12 @@ public class App {
 
   public static void main(String[] args) {
     App app = new App();
-    
-    app.addApplicationcontextListener(new DataLoaderListener());
+
+    app.addApplicationContextListener(new DataLoaderListener());
+    app.addApplicationContextListener(new GreetingListener());
 
     app.service();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
