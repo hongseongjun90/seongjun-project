@@ -32,6 +32,6 @@ dependencies {
 
 
 application {
-    mainClassName = 'com.eomcs.lms.App'
+    mainClassName = 'seongjun.cms.App'
 }
 
